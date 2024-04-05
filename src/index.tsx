@@ -4,15 +4,22 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { createStore } from 'redux';
-import counter from './reducers';
+import rootRenderer from './reducers';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 
-const store = createStore(counter);
+const store = createStore(rootRenderer);
 
-const render = () => root.render(
+store.dispatch({
+  type: 'ADD_TODO',
+  text: "USE REDUX"
+})
+
+console.log('store.getState', store.getState());
+
+const render = () => root.render( //render함수로 변경
   <React.StrictMode>
     <App 
       value={store.getState()}
@@ -27,4 +34,4 @@ render();
 // to log results (for example: reportWebVitals(console.log))
 // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 reportWebVitals();
-store.subscribe(render);
+store.subscribe(render); //subscribe를 통해서 리덕스 스토어가 변화할 때 리랜더링 시켜주기
